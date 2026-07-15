@@ -98,8 +98,7 @@ namespace WeatherAPI.Service
 
                 var json = await response.Content.ReadAsStringAsync();
 
-                var data = JsonSerializer.Deserialize<GeoCodingResponse>(
-                    json,
+                var data = JsonSerializer.Deserialize<GeoCodingResponse>(json,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
@@ -141,7 +140,7 @@ namespace WeatherAPI.Service
         {
             var latitudeText = latitude.ToString(CultureInfo.InvariantCulture);
 
-            var longitudeText =  longitude.ToString(CultureInfo.InvariantCulture);
+            var longitudeText = longitude.ToString(CultureInfo.InvariantCulture);
 
             var url = "https://api.open-meteo.com/v1/forecast" + $"?latitude={latitudeText}" + $"&longitude={longitudeText}" + "&current=temperature_2m," + "relative_humidity_2m," +
                 "apparent_temperature," + "weather_code," + "wind_speed_10m" + "&timezone=auto";
@@ -161,21 +160,18 @@ namespace WeatherAPI.Service
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new HttpRequestException(
-                        $"A API meteorológica respondeu com HTTP {(int)response.StatusCode}.");
+                    throw new HttpRequestException($"A API meteorológica respondeu com HTTP {(int)response.StatusCode}.");
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
 
-                var weather = JsonSerializer.Deserialize<DocsResponse>(
-                    json,
+                var weather = JsonSerializer.Deserialize<DocsResponse>(json,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
 
-                if (weather?.Current == null ||
-                    weather.CurrentUnits == null)
+                if (weather?.Current == null || weather.CurrentUnits == null)
                 {
                     throw new HttpRequestException("A API meteorológica devolveu dados incompletos.");
                 }
@@ -247,4 +243,3 @@ namespace WeatherAPI.Service
         }
     }
 }
-

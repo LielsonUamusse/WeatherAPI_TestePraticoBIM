@@ -16,9 +16,7 @@ namespace WeatherAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeather(
-            [FromQuery] string city,
-            [FromQuery] string? country)
+        public async Task<IActionResult> GetWeather([FromQuery] string city,[FromQuery] string? country)
         {
             if (string.IsNullOrWhiteSpace(city))
             {
@@ -28,27 +26,15 @@ namespace WeatherAPI.Controllers
                 });
             }
 
-            var result =
-                await _weatherService.ConsultWeatherAsync(
-                    city.Trim(),
-                    country?.Trim());
+            var result = await _weatherService.ConsultWeatherAsync(city.Trim(), country?.Trim());
 
             return Ok(result);
         }
 
         [HttpGet("history")]
-        public async Task<IActionResult> GetHistory(
-            [FromQuery] string? city,
-            [FromQuery] string? country,
-            [FromQuery] DateTime? startDate,
-            [FromQuery] DateTime? endDate)
+        public async Task<IActionResult> GetHistory([FromQuery] string? city, [FromQuery] string? country, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
-            var history =
-                await _weatherService.GetHistoryAsync(
-                    city,
-                    country,
-                    startDate,
-                    endDate);
+            var history = await _weatherService.GetHistoryAsync(city,country,startDate,endDate);
 
             return Ok(history);
         }
@@ -56,8 +42,7 @@ namespace WeatherAPI.Controllers
         [HttpGet("history/{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var record =
-                await _weatherService.GetByIdAsync(id);
+            var record = await _weatherService.GetByIdAsync(id);
 
             if (record == null)
             {
@@ -73,8 +58,7 @@ namespace WeatherAPI.Controllers
         [HttpDelete("history/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleted =
-                await _weatherService.DeleteAsync(id);
+            var deleted = await _weatherService.DeleteAsync(id);
 
             if (!deleted)
             {
