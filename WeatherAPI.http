@@ -1,0 +1,10 @@
+@rootUrl = http://localhost:5013
+
+GET {{rootUrl}}/api/Weather?city=Maputo&country=Mozambique
+Accept: application/json
+
+###
+GET {{rootUrl}}/api/Weather/history
+Accept: application/json
+
+
