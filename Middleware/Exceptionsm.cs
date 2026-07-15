@@ -31,7 +31,7 @@ namespace WeatherAPI.Middleware
             {
                 _logger.LogError(ex, "Timeout na API externa.");
 
-                await WriteError(context, HttpStatusCode.BadGateway,"O serviço externo demorou demasiado a responder.", correlationId);
+                await WriteError(context, HttpStatusCode.BadGateway,"O servico externo demorou a responder.", correlationId);
             }
             catch (HttpRequestException ex)
             {

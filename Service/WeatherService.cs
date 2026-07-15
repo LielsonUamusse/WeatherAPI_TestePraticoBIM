@@ -93,7 +93,7 @@ namespace WeatherAPI.Service
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new HttpRequestException( $"A API de geocodificação respondeu com HTTP {(int)response.StatusCode}.");
+                    throw new HttpRequestException( $"A API respondeu com HTTP {(int)response.StatusCode}.");
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
@@ -106,7 +106,7 @@ namespace WeatherAPI.Service
 
                 if (data?.Results == null || data.Results.Count == 0)
                 {
-                    throw new KeyNotFoundException("Cidade não encontrada.");
+                    throw new KeyNotFoundException("Cidade nao encontrada.");
                 }
 
                 IEnumerable<GeocodingResult> locations =
@@ -121,7 +121,7 @@ namespace WeatherAPI.Service
 
                 if (location == null)
                 {
-                    throw new KeyNotFoundException("Cidade não encontrada para o país informado.");
+                    throw new KeyNotFoundException("Cidade nao encontrada para o pais informado.");
                 }
 
                 return location;
@@ -130,12 +130,12 @@ namespace WeatherAPI.Service
             {
                 stopwatch.Stop();
 
-                _logger.LogError(ex, "Timeout na API de geocodificação após {Duration} ms", stopwatch.ElapsedMilliseconds);
+                _logger.LogError(ex, "Timeout na API apos {Duration} ms", stopwatch.ElapsedMilliseconds);
 
-                throw new HttpRequestException("Timeout ao consultar a API de geocodificação.", ex);
+                throw new HttpRequestException("Timeout ao consultar a API.", ex);
             }
         }
-
+        //Resposta
         private async Task<DocsResponse> GetWeatherAsync(double latitude, double longitude)
         {
             var latitudeText = latitude.ToString(CultureInfo.InvariantCulture);
@@ -160,7 +160,7 @@ namespace WeatherAPI.Service
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new HttpRequestException($"A API meteorológica respondeu com HTTP {(int)response.StatusCode}.");
+                    throw new HttpRequestException($"A API respondeu com HTTP {(int)response.StatusCode}.");
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
@@ -173,7 +173,7 @@ namespace WeatherAPI.Service
 
                 if (weather?.Current == null || weather.CurrentUnits == null)
                 {
-                    throw new HttpRequestException("A API meteorológica devolveu dados incompletos.");
+                    throw new HttpRequestException("A API devolveu dados incompletos.");
                 }
 
                 return weather;
@@ -184,10 +184,10 @@ namespace WeatherAPI.Service
 
                 _logger.LogError(
                     ex,
-                    "Timeout na API meteorológica após {Duration} ms",
+                    "Timeout na API apos {Duration} ms",
                     stopwatch.ElapsedMilliseconds);
 
-                throw new HttpRequestException("Timeout ao consultar a API meteorológica.",ex);
+                throw new HttpRequestException("Timeout ao consultar a API.",ex);
             }
         }
 
